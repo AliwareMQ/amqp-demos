@@ -1,0 +1,8 @@
+{
+      "require": {
+        "php-amqplib/php-amqplib": ">=2.8.1"
+      },
+      "require-dev": {
+            "phpunit/phpunit": "^5"
+      }
+}

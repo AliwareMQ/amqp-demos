@@ -32,13 +32,7 @@ public class SenderWithCallback {
         String unRoutingKey = "norProduct";
 
 
-        // 1.发送一条正常的消息 CorrelationData唯一（可以在ConfirmListener中确认消息）
-        //IntStream.rangeClosed(0, 10).forEach(num -> {
-        //    String message = LocalDateTime.now().toString() + "发送第" + (num + 1) + "条消息.";
-        //    rabbitTemplate.convertAndSend(exchange, routingKey, message, new CorrelationData("routing" + UUID.randomUUID().toString()));
-        //    log.info("发送一条消息,exchange:[{}],routingKey:[{}],message:[{}]", exchange, routingKey, message);
-        //});
-        // 2.发送一条未被路由的消息，此消息将会进入备份交换器（alternate exchange）
+         //1.发送一条未被路由的消息
         String message = LocalDateTime.now().toString() + "发送一条消息.";
         rabbitTemplate.convertAndSend(exchange, unRoutingKey, message, new CorrelationData("unRouting-" + UUID.randomUUID().toString()));
         log.info("发送一条消息,exchange:[{}],routingKey:[{}],message:[{}]", exchange, unRoutingKey, message);

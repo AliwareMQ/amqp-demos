@@ -38,12 +38,6 @@ public class RabbitConfig {
         return connectionFactory;
     }
 
-    @Bean
-    public Queue createQueue() {
-        return new Queue("queue");
-    }
-
-
     /**
      * 申明队列
      *

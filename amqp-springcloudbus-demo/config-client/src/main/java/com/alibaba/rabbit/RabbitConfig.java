@@ -14,7 +14,7 @@ import java.util.Map;
 @Configuration
 public class RabbitConfig {
     //资源owner账户 ID 信息
-    private static final long RESOURCE_OWNER_ID =1659552290525996L;
+    private static final long RESOURCE_OWNER_ID =0L;
     @Autowired
     private RabbitProperties rabbitProperties;
 

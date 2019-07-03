@@ -1,0 +1,23 @@
+不看必挂
+首先启动rabbitMQ服务端
+1.配置eureka-server注册中心服务端，修改该模块的配置文件application.yml，并启动
+2.配置config-server配置中心服务端，修改该模块的配置文件application.properties
+  配置相关的配置参数库信息，并启动
+3.修改config-client配置客户端的配置文件application.properties
+ #接入点根据控制台获取接入点
+ spring.rabbitmq.host=${endpoint}
+ #端口 默认5672
+ spring.rabbitmq.port=${port}
+ #accessKey  ram控制台获取用户子账户ak
+ spring.rabbitmq.username=${ak}
+ #secretKey ram控制台获取用户子账户ak
+ spring.rabbitmq.password=${sk}
+ #virtual-host 你要使用的virtaulhost
+ spring.rabbitmq.virtual-host=${vhost}
+
+4.修改 RabbitConfig 类的属性RESOURCE_OWNER_ID
+
+#将RabbitConfig的RESOURCE_OWNER_ID 设置成主账号的id，即接入点内的数字部分 例如123456789.mq-amqp.cn-hangzhou-xx.aliyuncs.com的例如123456789；
+private static final long RESOURCE_OWNER_ID =0L;
+
+5.可以启动多个config-client,实现动态参数配置。

@@ -4,7 +4,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 include("AliyunCredentialsProvider.php");
 
 /*接入点*/
-$host = "**";
+$host = "*";
 /*默认端口*/
 $port = 5672;
 /*资源隔离*/
@@ -12,9 +12,9 @@ $virtualHost = "test";
 /*阿里云的accessKey*/
 $accessKey = "**";
 /*阿里云的accessSecret*/
-$accessSecret = "**";
+$accessSecret = "***";
 /*主账号id*/
-$resourceOwnerId = *;
+$resourceOwnerId = 0;
 
 $connectionUtil = new ConnectionUtil($host, $port, $virtualHost, $accessKey, $accessSecret, $resourceOwnerId);
 
@@ -28,6 +28,8 @@ echo " [*] Waiting for messages. To exit press CTRL+C\n";
 
 $callback = function ($msg) {
     echo ' [x] Received ', $msg->body, "\n";
+    $headers = $msg->get('application_headers');
+    echo ' [x] Received ', $headers->getNativeData()['delay'], "\n";
     $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
 };
 

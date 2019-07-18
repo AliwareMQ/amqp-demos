@@ -2,7 +2,9 @@
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Wire\AMQPTable;
 include("AliyunCredentialsProvider.php");
+
 
 /*接入点*/
 $host = "**";
@@ -13,9 +15,9 @@ $virtualHost = "test";
 /*阿里云的accessKey*/
 $accessKey = "**";
 /*阿里云的accessSecret*/
-$accessSecret = "**";
+$accessSecret = "***";
 /*主账号id*/
-$resourceOwnerId = *;
+$resourceOwnerId = 0;
 
 $connectionUtil = new ConnectionUtil($host, $port, $virtualHost, $accessKey, $accessSecret, $resourceOwnerId);
 $connection = $connectionUtil->getConnection();
@@ -24,7 +26,16 @@ $channel = $connection->channel();
 
 $channel->queue_declare('queue', false, false, false, false);
 
-$msg = new AMQPMessage('Hello World!');
+$msgBody = json_encode(["name" => "iGoo", "age" => 22]);
+
+
+$amqpTable = new AMQPTable(["delay"=>"1000"]);
+
+
+$msg = new AMQPMessage($msgBody, ['application_headers'=>$amqpTable,'content_type' => 'text/plain', 'delivery_mode' => 2]); //生成消息
+
+
+//$msg = new AMQPMessage('Hello World!');
 
 $channel->basic_publish($msg, '', 'queue');
 echo " [x] Sent 'Hello World!'\n";

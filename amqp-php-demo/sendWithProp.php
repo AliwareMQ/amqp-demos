@@ -1,7 +1,10 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Wire\AMQPTable;
 include("AliyunCredentialsProvider.php");
+
 
 /*接入点*/
 $host = "***";
@@ -17,25 +20,23 @@ $accessSecret = "***";
 $resourceOwnerId = 0;
 
 $connectionUtil = new ConnectionUtil($host, $port, $virtualHost, $accessKey, $accessSecret, $resourceOwnerId);
-
 $connection = $connectionUtil->getConnection();
 
 $channel = $connection->channel();
 
 $channel->queue_declare('queue', false, false, false, false);
 
-echo " [*] Waiting for messages. To exit press CTRL+C\n";
+$msgBody = json_encode(["name" => "iGoo", "age" => 22]);
 
-$callback = function ($msg) {
-    echo ' [x] Received ', $msg->body, "\n";
-    $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-};
 
-$channel->basic_consume('queue', '', false, true, false, false, $callback);
+$amqpTable = new AMQPTable(["delay"=>"1000"]);
 
-while (count($channel->callbacks)) {
-    $channel->wait();
-}
+
+$msg = new AMQPMessage($msgBody, ['application_headers'=>$amqpTable,'content_type' => 'text/plain', 'delivery_mode' => 2]); //生成消息
+
+
+$channel->basic_publish($msg, '', 'queue');
+echo " [x] Sent 'Hello World!'\n";
 
 $channel->close();
 $connection->close();

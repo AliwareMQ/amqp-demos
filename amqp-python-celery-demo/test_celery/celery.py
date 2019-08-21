@@ -18,8 +18,8 @@ def getPassword(sk):
     sig_str = "%s:%s" % (sig, ts)
     return base64.b64encode(sig_str.encode('utf-8'))
 
-AMQP_USER = getUser('ak***', 'id***')
-AMQP_PASSWORD = getPassword('sk***')
+AMQP_USER = getUser('ak***', 'userid***')
+AMQP_PASSWORD = getPassword('sk****')
 AMQP_VHOST = 'x'
 CELERY_BROKER_URL = 'amqp://{0}:{1}@30.5.120.145:5672/{2}'.format(AMQP_USER, AMQP_PASSWORD, AMQP_VHOST)
 
@@ -29,6 +29,6 @@ app.conf.update(
     broker_url=CELERY_BROKER_URL,
     broker_login_method='PLAIN',
     task_default_queue='queue1',
-    task_default_exchange_type='fanout',
-    task_default_exchange='exchange1'
+    task_default_exchange_type='direct',
+    task_default_exchange='exchange123'
 )

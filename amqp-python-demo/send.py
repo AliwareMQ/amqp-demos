@@ -78,25 +78,26 @@ class ExamplePublisher(object):
 
         """
         LOGGER.error('Connection open failed, reopening in 5 seconds: %s', err)
-        self._connection.ioloop.add_timeout(5, self._connection.ioloop.stop)
+        # self._connection.ioloop.add_timeout(5, self._connection.ioloop.stop)
+        self._connection.ioloop.call_later(5, self._connection.ioloop.stop)
 
-    def on_connection_closed(self, connection, reply_code, reply_text):
+    def on_connection_closed(self, _unused_connection, reason):
         """This method is invoked by pika when the connection to RabbitMQ is
         closed unexpectedly. Since it is unexpected, we will reconnect to
         RabbitMQ if it disconnects.
-
         :param pika.connection.Connection connection: The closed connection obj
         :param Exception reason: exception representing reason for loss of
             connection.
-
         """
+        LOGGER.warning('Connection closed, : %s',
+                       reason)
         self._channel = None
         if self._stopping:
             self._connection.ioloop.stop()
         else:
-            LOGGER.warning('Connection closed, reopening in 5 seconds: (%s) %s',
-                           reply_code, reply_text)
-            self._connection.add_timeout(5, self.reconnect)
+            LOGGER.warning('Connection closed, reopening in 5 seconds: %s',
+                           reason)
+            self._connection.ioloop.call_later(5, self._connection.ioloop.stop)
 
     def reconnect(self):
         """Will be invoked by the IOLoop timer if the connection is
@@ -146,7 +147,7 @@ class ExamplePublisher(object):
         LOGGER.info('Adding channel close callback')
         self._channel.add_on_close_callback(self.on_channel_closed)
 
-    def on_channel_closed(self, channel, code, reason):
+    def on_channel_closed(self, channel, reason):
         """Invoked by pika when RabbitMQ unexpectedly closes the channel.
         Channels are usually closed if you attempt to do something that
         violates the protocol, such as re-declare an exchange or queue with
@@ -171,9 +172,9 @@ class ExamplePublisher(object):
 
         """
         LOGGER.info('Declaring exchange %s', exchange_name)
-        self._channel.exchange_declare(self.on_exchange_declareok,
-                                       exchange_name,
-                                       self.EXCHANGE_TYPE)
+        self._channel.exchange_declare(exchange_name,
+                                       exchange_type=self.EXCHANGE_TYPE,
+                                       callback=self.on_exchange_declareok)
 
     def on_exchange_declareok(self, unused_frame):
         """Invoked by pika when RabbitMQ has finished the Exchange.Declare RPC
@@ -194,7 +195,7 @@ class ExamplePublisher(object):
 
         """
         LOGGER.info('Declaring queue %s', queue_name)
-        self._channel.queue_declare(self.on_queue_declareok, queue_name)
+        self._channel.queue_declare(queue_name, callback=self.on_queue_declareok)
 
     def on_queue_declareok(self, method_frame):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -208,8 +209,8 @@ class ExamplePublisher(object):
         """
         LOGGER.info('Binding %s to %s with %s',
                     self.EXCHANGE, self.QUEUE, self.ROUTING_KEY)
-        self._channel.queue_bind(self.on_bindok, self.QUEUE,
-                                 self.EXCHANGE, self.ROUTING_KEY)
+        self._channel.queue_bind(self.QUEUE,
+                                 self.EXCHANGE, self.ROUTING_KEY, callback=self.on_bindok)
 
     def on_bindok(self, unused_frame):
         """This method is invoked by pika when it receives the Queue.BindOk
@@ -263,7 +264,7 @@ class ExamplePublisher(object):
         elif confirmation_type == 'nack':
             self._nacked += 1
         self._deliveries.remove(method_frame.method.delivery_tag)
-        LOGGER.warn('Published %i messages, %i have yet to be confirmed, '
+        LOGGER.warning('Published %i messages, %i have yet to be confirmed, '
                     '%i were acked and %i were nacked',
                     self._message_number, len(self._deliveries),
                     self._acked, self._nacked)
@@ -275,7 +276,7 @@ class ExamplePublisher(object):
         """
         LOGGER.info('Scheduling next message for %0.1f seconds',
                     self.PUBLISH_INTERVAL)
-        self._connection.ioloop.add_timeout(self.PUBLISH_INTERVAL,
+        self._connection.ioloop.call_later(self.PUBLISH_INTERVAL,
                                            self.publish_message)
 
     def publish_message(self):

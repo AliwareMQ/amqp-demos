@@ -7,20 +7,17 @@ def on_message(channel, method_frame, header_frame, body):
     print()
     channel.basic_ack(delivery_tag=method_frame.delivery_tag)
 
-
 while(True):
     try:
         print("Connecting...")
-        ## Shuffle the hosts list before reconnecting.
-        ## This can help balance connections.
 
         connection = pika.BlockingConnection(connection.getConnectionParam())
         channel = connection.channel()
         channel.basic_qos(prefetch_count=1)
-        ## This queue is intentionally non-durable. See http://www.rabbitmq.com/ha.html#non-mirrored-queue-behavior-on-node-failure
-        ## to learn more.
+
         channel.queue_declare('recovery-example', durable = False, auto_delete = True)
         channel.basic_consume('recovery-example', on_message)
+        print("connected and starting consume...")
         try:
             channel.start_consuming()
         except KeyboardInterrupt:

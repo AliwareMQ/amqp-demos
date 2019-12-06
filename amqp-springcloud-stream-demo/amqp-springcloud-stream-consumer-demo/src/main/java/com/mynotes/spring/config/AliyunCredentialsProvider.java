@@ -20,29 +20,29 @@ public class AliyunCredentialsProvider implements CredentialsProvider {
      */
     private final String securityToken;
     /**
-     * 资源owner账号（主账号）
+     * 实例Id （从阿里云AMQP控制台获取）
      */
-    private final long resourceOwnerId;
+    private final String instanceId;
 
     public AliyunCredentialsProvider(final String accessKeyId, final String accessKeySecret,
-                                     final long resourceOwnerId) {
-        this(accessKeyId, accessKeySecret, null, resourceOwnerId);
+                                     final String instanceId) {
+        this(accessKeyId, accessKeySecret, null, instanceId);
     }
 
     public AliyunCredentialsProvider(final String accessKeyId, final String accessKeySecret,
-                                     final String securityToken, final long resourceOwnerId) {
+                                     final String securityToken, final String instanceId) {
         this.accessKeyId = accessKeyId;
         this.accessKeySecret = accessKeySecret;
         this.securityToken = securityToken;
-        this.resourceOwnerId = resourceOwnerId;
+        this.instanceId = instanceId;
     }
 
     @Override
     public String getUsername() {
         if(StringUtils.isNotEmpty(securityToken)) {
-            return UserUtils.getUserName(accessKeyId, resourceOwnerId, securityToken);
+            return UserUtils.getUserName(accessKeyId, instanceId, securityToken);
         } else {
-            return UserUtils.getUserName(accessKeyId, resourceOwnerId);
+            return UserUtils.getUserName(accessKeyId, instanceId);
         }
     }
 

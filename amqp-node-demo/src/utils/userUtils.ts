@@ -6,14 +6,14 @@ const ACCESS_FROM_USER: number = 0;
 /**
  * 获取用户名
  * @param accessKeyId 
- * @param resourceOwnerId 
+ * @param instanceId
  */
-export function getUserName(accessKeyId: string, resourceOwnerId: number, securityToken?: string): string {
+export function getUserName(accessKeyId: string, instanceId: string, securityToken?: string): string {
   if (securityToken) {
-    return Base64.encode([ACCESS_FROM_USER, resourceOwnerId, accessKeyId, securityToken].join(':'));
+    return Base64.encode([ACCESS_FROM_USER, instanceId, accessKeyId, securityToken].join(':'));
   }
 
-  return Base64.encode([ACCESS_FROM_USER, resourceOwnerId, accessKeyId].join(':'));
+  return Base64.encode([ACCESS_FROM_USER, instanceId, accessKeyId].join(':'));
 }
 
 /**

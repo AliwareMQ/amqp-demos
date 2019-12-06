@@ -36,6 +36,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:4.2.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.2.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.2.7.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: com.alibaba.mq-amqp:mq-amqp-client:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.mq-amqp:mq-amqp-client:1.0.5-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
+    <orderEntry type="library" name="Maven: net.iharder:base64:2.3.9" level="project" />
   </component>
 </module>

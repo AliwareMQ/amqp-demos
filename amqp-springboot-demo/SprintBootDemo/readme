@@ -11,7 +11,7 @@
  #virtual-host 你要使用的virtaulhost
  spring.rabbitmq.virtual-host=${vhost}
 
-2.修改 RabbitConfig 类的属性RESOURCE_OWNER_ID
+2.修改 RabbitConfig 类的属性INSTANCE_ID
 
-#将RabbitConfig的RESOURCE_OWNER_ID 设置成主账号的id，即接入点内的数字部分 例如123456789.mq-amqp.cn-hangzhou-xx.aliyuncs.com的例如123456789；
-private static final long RESOURCE_OWNER_ID =0L;
+ //实例Id 从阿里云AMQP控制台获取
+ private static final String  INSTANCE_ID="XXX";

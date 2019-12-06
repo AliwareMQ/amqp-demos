@@ -13,9 +13,9 @@ func main() {
 	var buf bytes.Buffer
 	ak := "xxxxxxxx";
 	sk := "xxxxxxxx";
-	var resourceOwnerId uint64 = 137000000010111; // 请替换成您自己的userId
+	instanceId := "xxxxxxxx"; // 请替换成您阿里云AMQP控制台首页instanceId
 
-	userName := utils.GetUserName(ak, resourceOwnerId)
+	userName := utils.GetUserName(ak, instanceId)
 	password := utils.GetPassword(sk)
 	buf.WriteString("amqp://")
 	buf.WriteString(userName)

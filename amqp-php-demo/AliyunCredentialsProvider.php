@@ -7,20 +7,20 @@ Class ConnectionUtil {
     private $virtualHost;
     private $accessKey;
     private $accessSecret;
-    private $resourceOwnerId;
+    private $instanceId;
 
   function __construct($host, $port, $virtualHost, $accessKey,
-                       $accessSecret, $resourceOwnerId) {
+                       $accessSecret, $instanceId) {
     $this->host = $host;
     $this->port = $port;
     $this->virtualHost = $virtualHost;
     $this->accessKey = $accessKey;
     $this->accessSecret = $accessSecret;
-    $this->resourceOwnerId = $resourceOwnerId;
+    $this->instanceId = $instanceId;
   }
 
   private function getUser() {
-      $t = '0:' . $this->resourceOwnerId . ':' . $this->accessKey;
+      $t = '0:' . $this->instanceId . ':' . $this->accessKey;
       return base64_encode($t);
   }
 

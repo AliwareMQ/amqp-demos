@@ -13,8 +13,8 @@ import java.util.Map;
 
 @Configuration
 public class RabbitConfig {
-    //资源owner账户 ID 信息
-    private static final long RESOURCE_OWNER_ID =0L;
+    //实例id，从阿里云AMQP控制台获取
+    private static final String INSTANCE_ID ="XXX";
     @Autowired
     private RabbitProperties rabbitProperties;
 
@@ -28,7 +28,7 @@ public class RabbitConfig {
         rabbitConnectionFactory.setVirtualHost(rabbitProperties.getVirtualHost());
 
         AliyunCredentialsProvider credentialsProvider = new AliyunCredentialsProvider(
-                rabbitProperties.getUsername(), rabbitProperties.getPassword(), RESOURCE_OWNER_ID);
+                rabbitProperties.getUsername(), rabbitProperties.getPassword(), INSTANCE_ID);
         rabbitConnectionFactory.setCredentialsProvider(credentialsProvider);
         rabbitConnectionFactory.setAutomaticRecoveryEnabled(true);
         rabbitConnectionFactory.setNetworkRecoveryInterval(5000);

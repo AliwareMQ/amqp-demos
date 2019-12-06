@@ -14,21 +14,21 @@ const (
 	COLON            = ":"
 )
 
-func GetUserName(ak string, resourceOwnerId uint64) string {
+func GetUserName(ak string, instanceId string) string {
 	var buffer bytes.Buffer
 	buffer.WriteString(strconv.Itoa(ACCESS_FROM_USER))
 	buffer.WriteString(COLON)
-	buffer.WriteString(strconv.FormatUint(resourceOwnerId,10))
+	buffer.WriteString(instanceId)
 	buffer.WriteString(COLON)
 	buffer.WriteString(ak)
 	return base64.StdEncoding.EncodeToString(buffer.Bytes())
 }
 
-func GetUserNameBySTSToken(ak string, resourceOwnerId uint64, stsToken string) string {
+func GetUserNameBySTSToken(ak string, instanceId string, stsToken string) string {
 	var buffer bytes.Buffer
 	buffer.WriteString(strconv.Itoa(ACCESS_FROM_USER))
 	buffer.WriteString(COLON)
-	buffer.WriteString(strconv.FormatUint(resourceOwnerId,10))
+	buffer.WriteString(instanceId)
 	buffer.WriteString(COLON)
 	buffer.WriteString(ak)
 	buffer.WriteString(COLON)
@@ -47,3 +47,4 @@ func GetPassword(sk string) string {
 	fmt.Println(HmacSha1(sk,currentMillis))
 	return base64.StdEncoding.EncodeToString(buffer.Bytes())
 }
+

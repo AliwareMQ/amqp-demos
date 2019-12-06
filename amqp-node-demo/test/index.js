@@ -4,7 +4,7 @@ const aliyunAmqpCli = require('../build');
 const config = {
   accessKeyId: '${accessKeyId}',
   accessKeySecret: '${accessKeySecret}',
-  resourceOwnerId: '${resourceOwnerId}',
+  instanceId: '${instanceId}',
 };
 
 // 将配置传递 获取新连接对象

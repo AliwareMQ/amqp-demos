@@ -13,8 +13,8 @@ const transformUrl = url => url.indexOf('amqp://') === 0 ? url : `amqp://${url}`
  */
 function connect({ amqplib, config, url, options }) {
     const { credentials } = amqplib;
-    const { accessKeyId, accessKeySecret, securityToken, resourceOwnerId, } = config;
-    const username = userUtils.getUserName(accessKeyId, resourceOwnerId, securityToken);
+    const { accessKeyId, accessKeySecret, securityToken, instanceId, } = config;
+    const username = userUtils.getUserName(accessKeyId, instanceId, securityToken);
     const password = userUtils.getPassord(accessKeySecret);
     return amqplib.connect(transformUrl(url), Object.assign({}, options, { credentials: credentials.plain(username, password) }));
 }

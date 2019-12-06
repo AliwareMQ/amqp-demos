@@ -12,9 +12,9 @@ declare interface AliyunCredentialsType {
      */
     securityToken?: string;
     /**
-     * 资源owner账号（主账号）
+     * 资源instanceId（AMQP控制台获取）
      */
-    resourceOwnerId: number;
+    instanceId: string;
 }
 
 declare interface credentialsType {

@@ -13,7 +13,7 @@
 
     <!--配置连接-->
     <rabbit:connection-factory id="connectionFactory" host="endpoint" port="5672"
-                               username="#{userUtils.getUserName('ak',resourceOwnerId)}" password="#{userUtils.getPassord('sk')}"  virtual-host="test" requested-heartbeat="60" />
+                               username="#{userUtils.getUserName('ak',instanceId)}" password="#{userUtils.getPassord('sk')}"  virtual-host="test" requested-heartbeat="60" />
 
     <!--配置RabbitTemplate-->
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"

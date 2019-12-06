@@ -10,17 +10,17 @@ namespace AliyunAMQP
         internal static readonly string COLON = ":";
         internal static readonly DateTime EPOCH_START = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
-        public static string getUserName(string ak, string resourceOwnerId)
+        public static string getUserName(string ak, string instanceId)
         {
             StringBuilder data = new StringBuilder(64);
-            data.Append(FROM_USER).Append(COLON).Append(resourceOwnerId).Append(COLON).Append(ak);
+            data.Append(FROM_USER).Append(COLON).Append(instanceId).Append(COLON).Append(ak);
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(data.ToString()));
         }
 
-        public static string getUserName(string ak, string resourceOwnerId, string stsToken)
+        public static string getUserName(string ak, string instanceId, string stsToken)
         {
             StringBuilder data = new StringBuilder(64);
-            data.Append(FROM_USER).Append(COLON).Append(resourceOwnerId).Append(COLON).Append(ak).Append(COLON).Append(stsToken);
+            data.Append(FROM_USER).Append(COLON).Append(instanceId).Append(COLON).Append(ak).Append(COLON).Append(stsToken);
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(data.ToString()));
         }
 

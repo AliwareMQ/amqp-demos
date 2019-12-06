@@ -18,15 +18,15 @@ function connect({ amqplib, config, url, options }): Promise<any> {
     accessKeyId,
     accessKeySecret,
     securityToken,
-    resourceOwnerId,
+    instanceId,
   }: {
     accessKeyId: string;
     accessKeySecret: string;
     securityToken?: string;
-    resourceOwnerId: number;
+    instanceId: string;
   } = config;
 
-  const username: string = userUtils.getUserName(accessKeyId, resourceOwnerId, securityToken);
+  const username: string = userUtils.getUserName(accessKeyId, instanceId, securityToken);
   const password: string = userUtils.getPassord(accessKeySecret);
 
   return amqplib.connect(transformUrl(url), {

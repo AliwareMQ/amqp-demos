@@ -27,9 +27,9 @@ const config = {
      */
     accessKeySecret: '${accessKeySecret}',
     /**
-     * 资源owner账号（主账号）
+     * 实例Id 从阿里云AMQP控制台获取
      */
-    resourceOwnerId: '${resourceOwnerId}',
+    instanceId: '${instanceId}',
     /**
      * security temp token. (optional)
      */

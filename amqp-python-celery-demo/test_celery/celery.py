@@ -6,8 +6,8 @@ import hashlib
 from celery import Celery
 
 
-def getUser(ak, resourceOwnerId):
-    t = '0:%s:%s' % (resourceOwnerId, ak)
+def getUser(ak, instanceId):
+    t = '0:%s:%s' % (instanceId, ak)
     return base64.b64encode(t.encode('utf-8'))
 
 
@@ -18,7 +18,7 @@ def getPassword(sk):
     sig_str = "%s:%s" % (sig, ts)
     return base64.b64encode(sig_str.encode('utf-8'))
 
-AMQP_USER = getUser('ak***', 'userid***')
+AMQP_USER = getUser('ak***', 'instanceId***')
 AMQP_PASSWORD = getPassword('sk****')
 AMQP_VHOST = 'x'
 CELERY_BROKER_URL = 'amqp://{0}:{1}@30.5.120.145:5672/{2}'.format(AMQP_USER, AMQP_PASSWORD, AMQP_VHOST)

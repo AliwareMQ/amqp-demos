@@ -13,10 +13,10 @@ $virtualHost = "test";
 $accessKey = "***";
 /*阿里云的accessSecret*/
 $accessSecret = "***";
-/*主账号id*/
-$resourceOwnerId = 0;
+/*MAQP的instanceId AMQP控制台首页获取*/
+$instanceId = "***";
 
-$connectionUtil = new ConnectionUtil($host, $port, $virtualHost, $accessKey, $accessSecret, $resourceOwnerId);
+$connectionUtil = new ConnectionUtil($host, $port, $virtualHost, $accessKey, $accessSecret, $instanceId);
 
 $connection = $connectionUtil->getConnection();
 

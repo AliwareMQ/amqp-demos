@@ -12,10 +12,10 @@ virtualHost = "test";
 accessKey = "**";
 #阿里云的accessSecret
 accessSecret = "**";
-#主账号id
-resourceOwnerId = *;
+#实例instanceId可以从AMQP控制台首页复制
+instanceId = "**";
 
-provider = AliyunCredentialsProvider(accessKey, accessSecret, resourceOwnerId)
+provider = AliyunCredentialsProvider(accessKey, accessSecret, instanceId)
 
 def getConnectionParam():
     credentials = pika.PlainCredentials(provider.get_username(), provider.get_password(), erase_on_connect=True)

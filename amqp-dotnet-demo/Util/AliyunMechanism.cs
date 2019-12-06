@@ -19,16 +19,16 @@ namespace AliyunAMQP
         }
 
         private string getUserName(ConnectionFactory cf) {
-            string ownerResourceId;
+            string instanceId;
             try {
                 string[] sArray = cf.HostName.Split('.');
-                ownerResourceId = sArray[0];
+                instanceId = sArray[0];
             }
             catch (Exception e) {
                 throw new InvalidProgramException("hostName invalid");
             }
-            Console.WriteLine(ownerResourceId);
-            return AliyunUtils.getUserName(cf.UserName, ownerResourceId);
+            Console.WriteLine(instanceId);
+            return AliyunUtils.getUserName(cf.UserName, instanceId);
         }
     }
 }

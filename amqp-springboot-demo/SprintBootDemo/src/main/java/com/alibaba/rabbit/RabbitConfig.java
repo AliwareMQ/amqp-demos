@@ -28,7 +28,7 @@ public class RabbitConfig {
         rabbitConnectionFactory.setVirtualHost(rabbitProperties.getVirtualHost());
 
         AliyunCredentialsProvider credentialsProvider = new AliyunCredentialsProvider(
-                rabbitProperties.getUsername(), rabbitProperties.getPassword(), instanceId);
+                rabbitProperties.getUsername(), rabbitProperties.getPassword(), INSTANCE_ID);
         rabbitConnectionFactory.setCredentialsProvider(credentialsProvider);
         rabbitConnectionFactory.setAutomaticRecoveryEnabled(true);
         rabbitConnectionFactory.setNetworkRecoveryInterval(5000);

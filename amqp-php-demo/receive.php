@@ -13,7 +13,7 @@ $virtualHost = "test";
 $accessKey = "***";
 /*阿里云的accessSecret*/
 $accessSecret = "***";
-/*MAQP的instanceId AMQP控制台首页获取*/
+/*实例 id（从阿里云 AMQP 版控制台获取）*/
 $instanceId = "***";
 
 $connectionUtil = new ConnectionUtil($host, $port, $virtualHost, $accessKey, $accessSecret, $instanceId);

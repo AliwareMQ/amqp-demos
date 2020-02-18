@@ -3,18 +3,19 @@
 #include <amqpcpp.h>
 #include <aliyun/AliyunCred.h>
 #include <thread>
+#include <iostream>
 #include "MyLibuvHandler.h"
 
 int main() {
 
     char* host = "{host}";
     int port = 5672;
-    char* virtualHost = "{virtualHost}";
-    char* accessKey = "{ak}";
-    char* accessSecret = "{sk}";
-    long long int uid = -1;
+    char virtualHost[1024] = "{virtualHost}";
+    char accessKey[1024] = "{ak}";
+    char accessSecret[1024] = "{sk}";
+    char instanceId[1024] = "{instanceId}";
 
-    AliyunCred::CredentialsProvider credentialsProvider(accessKey, accessSecret, uid);
+    AliyunCred::CredentialsProvider credentialsProvider(accessKey, accessSecret, instanceId);
 
     std::string userName = credentialsProvider.GetUserName();
     std::string password = credentialsProvider.GetPassword();

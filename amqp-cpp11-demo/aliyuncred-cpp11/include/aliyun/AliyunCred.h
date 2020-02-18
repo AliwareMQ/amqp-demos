@@ -12,11 +12,11 @@ namespace AliyunCred {
     class CredentialsProvider {
     public:
         CredentialsProvider(const std::string& accessKeyId,
-                const std::string& accessKeySecret,
-                long long int uid,
-                const std::string& securityToken = ""):
+                            const std::string& accessKeySecret,
+                            const std::string& instanceId,
+                            const std::string& securityToken = ""):
                 _accessKeyId(accessKeyId), _accessKeySecret(accessKeySecret),
-                _uid(uid), _securityToken(securityToken){}
+                _instanceId(instanceId), _securityToken(securityToken){}
 
         std::string GetUserName();
 
@@ -25,7 +25,7 @@ namespace AliyunCred {
     private:
         std::string _accessKeyId;
         std::string _accessKeySecret;
-        long long int _uid;
+        std::string _instanceId;
         std::string _securityToken;
     };
 

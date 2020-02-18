@@ -4,10 +4,10 @@
 
 int main()
 {
-    std::string accessKeyId("accessKeyId");
-    std::string accessKeySecret("accessKeyId");
-    long long int uid = 0;
-    AliyunCred::CredentialsProvider credentialsProvider(accessKeyId, accessKeySecret, uid);
+    std::string accessKeyId("{ak}");
+    std::string accessKeySecret("{sk}");
+    std::string instanceId("{instanceId}");
+    AliyunCred::CredentialsProvider credentialsProvider(accessKeyId, accessKeySecret, instanceId);
 
     std::cout << credentialsProvider.GetUserName() << std::endl;
     std::cout << credentialsProvider.GetPassword() << std::endl;

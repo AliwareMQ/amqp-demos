@@ -26,7 +26,7 @@ std::string Base64Encode(const char *buffer, int length, bool newLine){
     BIO_get_mem_ptr(b64, &bptr);
     BIO_set_close(b64, BIO_NOCLOSE);
 
-    char *buff = new char[bptr->length];
+    char *buff = new char[bptr->length + 1];
     memcpy(buff, bptr->data, bptr->length);
     buff[bptr->length] = '\0';
     std::string retValue(buff);
@@ -37,7 +37,7 @@ std::string Base64Encode(const char *buffer, int length, bool newLine){
 
 std::string AliyunCred::CredentialsProvider::GetUserName() {
     char buffer[1024];
-    sprintf(buffer, "%d:%lld:%s", ACCESS_FROM_USER, _uid, _accessKeyId.c_str());
+    sprintf(buffer, "%d:%s:%s", ACCESS_FROM_USER, _instanceId.c_str(), _accessKeyId.c_str());
     int bufLen = strlen(buffer);
     std::string userName = Base64Encode(buffer, bufLen, false);
     if(!_securityToken.empty()) {

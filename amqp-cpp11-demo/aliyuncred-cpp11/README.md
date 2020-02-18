@@ -13,6 +13,12 @@ mkdir build && cd build
 cmake ..
 make
 ````
+After build, the "build" folder contains the materials below:
+````
+./build/include
+./build/lib
+````
+
 The include folder in build path is the cpp header file need to be included.
 
 The lib folder in build path is the lib file need to be linked.

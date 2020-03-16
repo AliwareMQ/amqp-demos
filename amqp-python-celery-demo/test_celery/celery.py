@@ -8,7 +8,10 @@ from celery import Celery
 
 def getUser(ak, instanceId):
     t = '0:%s:%s' % (instanceId, ak)
+    # For python2
     return base64.b64encode(t.encode('utf-8'))
+    # For python3
+    # return str(base64.b64encode(t.encode('utf-8')), 'utf-8')
 
 
 def getPassword(sk):
@@ -16,7 +19,10 @@ def getPassword(sk):
     h = hmac.new(ts.encode('utf-8'), sk.encode('utf-8'), hashlib.sha1)
     sig = h.hexdigest().upper()
     sig_str = "%s:%s" % (sig, ts)
+    # For python2
     return base64.b64encode(sig_str.encode('utf-8'))
+    # For python3 
+    # return str(base64.b64encode(sig_str.encode('utf-8')), 'utf-8')
 
 AMQP_USER = getUser('ak***', 'instanceId***')
 AMQP_PASSWORD = getPassword('sk****')

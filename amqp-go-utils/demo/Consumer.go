@@ -10,9 +10,9 @@ import (
 func main() {
 
 	var buf bytes.Buffer
-	ak := "xxxxxxxx";
-	sk := "xxxxxxxx";
-	instanceId := "xxxxxxxx"; // 请替换成您阿里云AMQP控制台首页instanceId
+	ak := "xxxxxxxx"
+	sk := "xxxxxxxx"
+	instanceId := "xxxxxxxx" // 请替换成您阿里云AMQP控制台首页instanceId
 
 	userName := utils.GetUserName(ak, instanceId)
 	password := utils.GetPassword(sk)

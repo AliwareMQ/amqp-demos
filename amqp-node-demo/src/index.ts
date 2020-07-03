@@ -27,7 +27,7 @@ function connect({ amqplib, config, url, options }): Promise<any> {
   } = config;
 
   const username: string = userUtils.getUserName(accessKeyId, instanceId, securityToken);
-  const password: string = userUtils.getPassord(accessKeySecret);
+  const password: string = userUtils.getPassword(accessKeySecret);
 
   return amqplib.connect(transformUrl(url), {
     ...options,

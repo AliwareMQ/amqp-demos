@@ -40,7 +40,7 @@ userName   = acp.get_user.chomp
 passWord   = acp.get_password.chomp
 
 host        = "{hostIP}"  
-port        = 5672
+port        = {port}
 vhost       = "{vhostName}"
 queueName   = "{queueName}"
 exchangeName = "{exchangeName}"

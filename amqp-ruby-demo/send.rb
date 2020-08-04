@@ -46,6 +46,8 @@ AMQP.start(connectStr) do |connection, open_ok|
   queue   = channel.queue(queueName)
   exchange = channel.direct(exchangeName)
 
+  # 注意：我们建议使用长链接方式发送和消费消息
+  #    Rabbitmq client 向Server发起connection,新建channel大约需要进行15+个TCP报文的传输，会消耗大量网络资源和Server端的资源，甚至引起Server端SYN flooding 攻击保护。因此我们建议消息的发送和消费尽量采用长链接的模式。
   producer = Producer.new(channel, exchange)
   puts "publish..."
   producer.publish("hello, world", :routing_key => routingkey)

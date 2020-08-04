@@ -26,7 +26,11 @@ $channel = $connection->channel();
 
 $channel->queue_declare('queue', false, false, false, false);
 
-/* 请尽量复用同一个链接、同一个channel进行消息发送；尽量使用长链接模式，可以采用rabbitmq提供的AMQPProxy来实现php的长链接-参考https://github.com/cloudamqp/amqproxy */
+/*
+ * rabbitmq client 向Server发起connection,新建channel大约需要进行15+个TCP报文的传输，会消耗大量网络资源和Server端的资源，甚至引起Server端SYN flooding 攻击保护。
+ * 因此我们建议消息的发送和消费尽量采用长链接的模式。
+ * 对于php，可以采用rabbitmq提供的AMQPProxy来实现的长链接-参考https://github.com/cloudamqp/amqproxy
+ */
 $msg = new AMQPMessage('Hello World!');
 $channel->basic_publish($msg, '', 'queue');
 echo " [x] Sent 'Hello World!'\n";

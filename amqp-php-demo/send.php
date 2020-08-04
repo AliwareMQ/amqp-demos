@@ -26,9 +26,8 @@ $channel = $connection->channel();
 
 $channel->queue_declare('queue', false, false, false, false);
 
-
+/* 请尽量复用同一个链接、同一个channel进行消息发送；尽量使用长链接模式，可以采用rabbitmq提供的AMQPProxy来实现php的长链接-参考https://github.com/cloudamqp/amqproxy */
 $msg = new AMQPMessage('Hello World!');
-
 $channel->basic_publish($msg, '', 'queue');
 echo " [x] Sent 'Hello World!'\n";
 

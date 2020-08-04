@@ -50,6 +50,10 @@ func main() {
 	err = ch.QueueBind("helloQueue", "hello", "helloExchange", false, nil)
 	failOnError(err, "Failed to bind a queue")
 
+	/*
+	 * rabbitmq client 向Server发起connection,新建channel大约需要进行15+个TCP报文的传输，会消耗大量网络资源和Server端的资源，甚至引起Server端SYN flooding 攻击保护。
+	 * 因此我们建议消息的发送和消费尽量采用长链接的模式。
+	 */
 	body := "Hello World!"
 	err = ch.Publish(
 		"helloExchange",     // exchange

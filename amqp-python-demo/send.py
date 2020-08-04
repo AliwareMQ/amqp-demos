@@ -7,6 +7,11 @@ LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
                 '-35s %(lineno) -5d: %(message)s')
 LOGGER = logging.getLogger(__name__)
 
+"""
+注意：我们建议使用长链接方式发送和消费消息
+  Rabbitmq client 向Server发起connection,新建channel大约需要进行15+个TCP报文的传输，会消耗大量网络资源和Server端的资源，
+  甚至引起Server端SYN flooding 攻击保护。因此我们建议消息的发送和消费尽量采用长链接的模式。
+"""
 
 class ExamplePublisher(object):
     """This is an example publisher that will handle unexpected interactions

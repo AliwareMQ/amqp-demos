@@ -12,6 +12,10 @@ $host = "***";
 $port = 5672;
 /*资源隔离*/
 $virtualHost = "test";
+/*exchange*/
+$exchange = "amq.direct"
+/*queue*/
+$queue = "queue"
 /*阿里云的accessKey*/
 $accessKey = "***";
 /*阿里云的accessSecret*/
@@ -24,12 +28,14 @@ $connection = $connectionUtil->getConnection();
 
 $channel = $connection->channel();
 
-$channel->queue_declare('queue', false, false, false, false);
+$channel->queue_declare($queue, false, false, false, false);
+
+$channel->queue_bind($queue, $exchange); // queue与exchange绑定
 
 
 $msg = new AMQPMessage('Hello World!');
 
-$channel->basic_publish($msg, '', 'queue');
+$channel->basic_publish($msg, '', $queue);
 echo " [x] Sent 'Hello World!'\n";
 
 $channel->close();

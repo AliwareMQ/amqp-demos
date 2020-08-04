@@ -14,7 +14,7 @@ class AliyunCredentialsProvider:
     """
     ACCESS_FROM_USER = 0
 
-    def __init__(self, access_key, access_secret, uid):
+    def __init__(self, access_key, access_secret, instanceId):
         self.accessKey = access_key
         self.accessSecret = access_secret
         self.instanceId = instanceId

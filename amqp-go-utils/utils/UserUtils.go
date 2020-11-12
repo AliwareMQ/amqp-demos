@@ -40,7 +40,7 @@ func GetPassword(sk string) string {
 	now := time.Now()
 	currentMillis := strconv.FormatInt(now.UnixNano()/1000000,10)
 	var buffer bytes.Buffer
-	buffer.WriteString(strings.ToUpper(HmacSha1(currentMillis,sk)))
+	buffer.WriteString(strings.ToUpper(HmacSha1(sk,currentMillis)))
 	buffer.WriteString(COLON)
 	buffer.WriteString(currentMillis)
 	fmt.Println(currentMillis)

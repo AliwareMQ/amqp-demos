@@ -17,9 +17,15 @@ public class Sender {
 	public void send() {
 		String exchange = "exchange-rabbit-springboot-advance5";
 		String routingKey = "product";
-		String message = LocalDateTime.now().toString() + "发送一条消息.";
+		
+		MessageProperties messageProperties = new MessageProperties();
+		String msgId = "unRouting-" + UUID.randomUUID().toString();
+                //此处设置的msgId才能被会转成rabbitmq client的messageId，发送给broker
+		messageProperties.setMessageId(msgId);
+                Message message = new Message("发送一条消息".getBytes(), messageProperties);
+		
 		rabbitTemplate.convertAndSend(exchange, routingKey, message,
-			new CorrelationData("unRouting-" + UUID.randomUUID().toString()));
+			new CorrelationData(msgId));
 
 	}
 }

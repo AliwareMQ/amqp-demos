@@ -29,9 +29,16 @@ public class SenderWithCallback {
     public void send() {
         String exchange = "exchange-rabbit-springboot-advance5";
         String unRoutingKey = "norProduct";
-         //1.发送一条未被路由的消息
-        String message = LocalDateTime.now().toString() + "发送一条消息.";
-        rabbitTemplate.convertAndSend(exchange, unRoutingKey, message, new CorrelationData("unRouting-" + UUID.randomUUID().toString()));
+
+        //1.发送一条未被路由的消息
+		MessageProperties messageProperties = new MessageProperties();
+		String msgId = "unRouting-" + UUID.randomUUID().toString();
+        //此处设置的msgId才能被会转成rabbitmq client的messageId，发送给broker
+		messageProperties.setMessageId(msgId);
+        Message message = new Message("发送一条消息".getBytes(), messageProperties);
+		
+		rabbitTemplate.convertAndSend(exchange, routingKey, message, new CorrelationData(msgId));
+        
         log.info("发送一条消息,exchange:[{}],routingKey:[{}],message:[{}]", exchange, unRoutingKey, message);
 
 

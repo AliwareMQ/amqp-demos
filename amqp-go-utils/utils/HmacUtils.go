@@ -7,8 +7,7 @@ import (
 )
 
 func HmacSha1(keyStr string, message string) string {
-	key := []byte(keyStr)
-	mac := hmac.New(sha1.New, key)
-	mac.Write([]byte(message))
+	mac := hmac.New(sha1.New, []byte(message))
+	mac.Write([]byte([]byte(keyStr)))
 	return hex.EncodeToString(mac.Sum(nil))
 }

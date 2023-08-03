@@ -14,6 +14,7 @@ public class RabbitReturnCallback implements RabbitTemplate.ReturnCallback {
     Logger log= LoggerFactory.getLogger(RabbitReturnCallback.class);
     @Override
     public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-        log.info("message return message:"+message+",replyCode:"+replyCode+",replyText:"+replyText+",exchange:"+exchange+",routingKey:"+routingKey);
+        log.info("message return message: {}, replyCode: {}, replyText: {}, exchange: {}, routingKey: {}",
+            new String(message.getBody()), replyCode, replyText, exchange, routingKey);
     }
 }

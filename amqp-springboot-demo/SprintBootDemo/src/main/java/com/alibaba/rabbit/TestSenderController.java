@@ -17,6 +17,11 @@ public class TestSenderController {
     @Resource
     private Sender sender;
 
+    /**
+     * 发送消息
+     * @param withCallback 测试messageReturn功能开关
+     * @return "success"
+     */
     @RequestMapping(value="/send")
     public String sendMessage(@RequestParam(name="withCallback",required = false) boolean withCallback){
         if(withCallback) {
@@ -25,10 +30,6 @@ public class TestSenderController {
             sender.send();
         }
 
-        return "Success";
+        return "success";
     }
-
-
-
-
 }

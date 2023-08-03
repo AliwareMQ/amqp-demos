@@ -21,7 +21,6 @@ public class RabbitConfig {
 
     @Bean
     public ConnectionFactory getConnectionFactory() throws NoSuchAlgorithmException, KeyManagementException {
-
         // 初始化RabbitMQ连接配置 connectionFactory
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         connectionFactory.setHost(rabbitProperties.getHost());

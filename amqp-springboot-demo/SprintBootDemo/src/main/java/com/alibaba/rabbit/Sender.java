@@ -1,5 +1,7 @@
 package com.alibaba.rabbit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -11,6 +13,9 @@ import java.util.UUID;
 
 @Component
 public class Sender {
+
+	private static final Logger log = LoggerFactory.getLogger(Sender.class);
+
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 
@@ -27,5 +32,6 @@ public class Sender {
 		rabbitTemplate.convertAndSend(exchange, routingKey, message,
 			new CorrelationData(msgId));
 
+		log.info("发送一条消息,exchange:[{}],routingKey:[{}],message:[{}]", exchange, routingKey, message);
 	}
 }

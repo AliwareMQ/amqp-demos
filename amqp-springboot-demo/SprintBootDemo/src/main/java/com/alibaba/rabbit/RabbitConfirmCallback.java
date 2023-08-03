@@ -11,9 +11,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
  */
 public class RabbitConfirmCallback implements RabbitTemplate.ConfirmCallback {
 
-    Logger log= LoggerFactory.getLogger(RabbitConfirmCallback.class);
+    private static final Logger log= LoggerFactory.getLogger(RabbitConfirmCallback.class);
+
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-        log.info("MessageConfirm correlationData:"+correlationData+",ack:"+ack+",cause:"+cause);
+        log.info("MessageConfirm correlationData: {}, ack: {}, cause: {}", correlationData, ack, cause);
     }
 }

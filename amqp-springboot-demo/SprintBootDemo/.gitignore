@@ -1,0 +1,16 @@
+*dependency-reduced-pom.xml
+.classpath
+.project
+.settings/
+target/
+devenv
+*.log*
+*.iml
+*.pid
+.idea/
+*.versionsBackup
+!NOTICE-BIN
+!LICENSE-BIN
+.DS_Store
+.vscode
+**/.factorypath

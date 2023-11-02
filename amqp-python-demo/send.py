@@ -366,7 +366,7 @@ class ExamplePublisher(object):
 
 
 def main():
-    logging.basicConfig(level=logging.WARN, format=LOG_FORMAT)
+    logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
 
     example = ExamplePublisher()
     example.run()

@@ -164,6 +164,9 @@ class ExampleConsumer(object):
         #                                self.EXCHANGE_TYPE)
         self._channel.exchange_declare(exchange_name,
                                        exchange_type=self.EXCHANGE_TYPE,
+
+                                        # Resources created with aliyun rammitmq cmd should set durable=True here
+                                        # durable=True,
                                        callback=self.on_exchange_declareok)
 
     def on_exchange_declareok(self, unused_frame):
@@ -188,6 +191,9 @@ class ExampleConsumer(object):
         # self._channel.queue_declare(self.on_queue_declareok, queue_name)
 
         self._channel.queue_declare(queue_name, callback=self.on_queue_declareok)
+        
+        # Resources created with aliyun rammitmq cmd should set durable=True here
+        # self._channel.queue_declare(queue_name, durable=True, callback=self.on_queue_declareok)
 
     def on_queue_declareok(self, method_frame):
         """Method invoked by pika when the Queue.Declare RPC call made in

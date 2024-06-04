@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class ProducerTest {
@@ -34,6 +35,8 @@ public class ProducerTest {
         factory.setPassword(PASSWORD);
         factory.setVirtualHost(VHOST);
         factory.setClientProperties(Collections.singletonMap("connection_name", CONNECTION_NAME));
+        // 开启自动恢复功能
+        factory.setAutomaticRecoveryEnabled(true);
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             ConcurrentNavigableMap<Long/*deliveryTag*/, String/*msgId*/> outstandingConfirms=new ConcurrentSkipListMap<>();
@@ -51,10 +54,11 @@ public class ProducerTest {
                         .build();
                     outstandingConfirms.put(channel.getNextPublishSeqNo(), msgId);
                     channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, properties, message.getBytes(StandardCharsets.UTF_8));
-                    Thread.sleep(1000L);
+                    TimeUnit.SECONDS.sleep(1);
                 } catch (Exception e) {
+                    //如果在生产环境，需要替换为日志记录
                     System.out.println(" Send fail, error: " + e.getMessage());
-                    Thread.sleep(5000L);
+                    TimeUnit.SECONDS.sleep(5);
                 }
             }
         } catch (Exception e) {

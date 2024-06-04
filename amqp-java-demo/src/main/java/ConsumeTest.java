@@ -1,7 +1,6 @@
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import java.nio.charset.StandardCharsets;
 
 public class ConsumeTest {
     private static final String QUEUE_NAME = "yunQi-queue";
@@ -17,19 +16,20 @@ public class ConsumeTest {
         factory.setPassword(PASSWORD);
         factory.setVirtualHost(VHOST);
 
-        try {Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel();
+        try {
+            Connection connection = factory.newConnection();
+            Channel channel = connection.createChannel();
             try {
                 channel.basicConsume(QUEUE_NAME, true, (s, delivery) -> {
-                    System.out.println("[ReceiveResult] Message Received successfully, messageId: "+delivery.getProperties().getMessageId()+", message: " + new String(delivery.getBody()));
+                    System.out.println("[ReceiveResult] Message Received successfully, messageId: " + delivery.getProperties().getMessageId() + ", message: " + new String(delivery.getBody()));
                 }, s -> {
                 });
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("[ReceiveResult] Receive fail, error: " + e.getMessage());
             }
-          }catch(Exception e){
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+}
 

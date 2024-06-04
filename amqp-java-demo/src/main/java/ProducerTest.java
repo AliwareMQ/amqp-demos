@@ -1,22 +1,15 @@
-import com.oracle.jrockit.jfr.Producer;
 import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.BasicProperties;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmCallback;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.MessageProperties;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class ProducerTest {
     private static final String QUEUE_NAME = "yunQi-queue";
@@ -39,8 +32,8 @@ public class ProducerTest {
         factory.setAutomaticRecoveryEnabled(true);
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
-            ConcurrentNavigableMap<Long/*deliveryTag*/, String/*msgId*/> outstandingConfirms=new ConcurrentSkipListMap<>();
-            initChannel(channel,outstandingConfirms);
+            ConcurrentNavigableMap<Long/*deliveryTag*/, String/*msgId*/> outstandingConfirms = new ConcurrentSkipListMap<>();
+            initChannel(channel, outstandingConfirms);
             channel.queueDeclare(QUEUE_NAME, true, false, false, null);
             channel.exchangeDeclare(EXCHANGE_NAME, "direct", true); // 根据实际情况更改交换类型
             // 开始发送消息，3600条消息，每条发送后暂停1秒，将持续1小时。
@@ -48,7 +41,7 @@ public class ProducerTest {
             for (int i = 1; i <= messageCount; i++) {
                 try {
                     String message = "消息Body-" + i;
-                    String msgId=UUID.randomUUID().toString();
+                    String msgId = UUID.randomUUID().toString();
                     AMQP.BasicProperties properties = new AMQP.BasicProperties.Builder()
                         .messageId(msgId)
                         .build();
@@ -65,7 +58,9 @@ public class ProducerTest {
             e.printStackTrace();
         }
     }
-    private static void initChannel(Channel channel, ConcurrentNavigableMap<Long/*deliveryTag*/, String/*msgId*/> outstandingConfirms) throws IOException {
+
+    private static void initChannel(Channel channel,
+        ConcurrentNavigableMap<Long/*deliveryTag*/, String/*msgId*/> outstandingConfirms) throws IOException {
         channel.confirmSelect();
         ConfirmCallback cleanOutstandingConfirms = (deliveryTag, multiple) -> {
             // 消息发送成功时的回调，multiple为true表示批量确认

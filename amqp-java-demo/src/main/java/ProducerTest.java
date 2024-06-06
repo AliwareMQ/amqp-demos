@@ -16,10 +16,9 @@ public class ProducerTest {
     private static final String EXCHANGE_NAME = "yunQi-exchange";
     private static final String ROUTING_KEY = "yunQi-routing-key";
     private static final String VHOST = "yunQi-vhost";
-    private static final String CONNECTION_NAME = "yunQi-connection";
-    private static final String HOSTNAME = "your-instance-endpoint"; // 替换为配置的阿里云MQ实例的公网接入点
-    private static final String USERNAME = "your-username"; // 替换为配置的静态用户名
-    private static final String PASSWORD = "your-password"; // 替换为配置的静态密码
+    private static final String HOSTNAME = Config.HOSTNAME;
+    private static final String USERNAME = Config.USERNAME;
+    private static final String PASSWORD = Config.PASSWORD;
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
@@ -27,7 +26,6 @@ public class ProducerTest {
         factory.setUsername(USERNAME);
         factory.setPassword(PASSWORD);
         factory.setVirtualHost(VHOST);
-        factory.setClientProperties(Collections.singletonMap("connection_name", CONNECTION_NAME));
         // 开启自动恢复功能
         factory.setAutomaticRecoveryEnabled(true);
         try (Connection connection = factory.newConnection();

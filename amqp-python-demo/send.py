@@ -1,10 +1,11 @@
+# coding=utf-8
 import logging
-import pika
-import json
 import uuid
+import pika
 import connection
+
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
-                '-35s %(lineno) -5d: %(message)s')
+              '-35s %(lineno) -5d: %(message)s')
 LOGGER = logging.getLogger(__name__)
 
 """
@@ -12,6 +13,7 @@ LOGGER = logging.getLogger(__name__)
   Rabbitmq client 向Server发起connection,新建channel大约需要进行15+个TCP报文的传输，会消耗大量网络资源和Server端的资源，
   甚至引起Server端SYN flooding 攻击保护。因此我们建议消息的发送和消费尽量采用长链接的模式。
 """
+
 
 class ExamplePublisher(object):
     """This is an example publisher that will handle unexpected interactions
@@ -27,10 +29,10 @@ class ExamplePublisher(object):
 
     """
     PUBLISH_INTERVAL = 1
-    EXCHANGE = 'exchange.test'
+    EXCHANGE = 'xx-exchange'
     EXCHANGE_TYPE = 'direct'
-    QUEUE = 'queue.test'
-    ROUTING_KEY = 'key'
+    QUEUE = 'xx-queue'
+    ROUTING_KEY = 'xx-key'
 
     def __init__(self):
         """Setup the example publisher object, passing in the URL we will use
@@ -58,7 +60,7 @@ class ExamplePublisher(object):
 
         """
         LOGGER.info('Connecting')
-        return pika.SelectConnection(connection.getConnectionParam(),
+        return pika.SelectConnection(connection.get_connection_param(),
                                      on_open_callback=self.on_connection_open,
                                      on_open_error_callback=self.on_connection_open_error,
                                      on_close_callback=self.on_connection_closed)
@@ -113,13 +115,12 @@ class ExamplePublisher(object):
         self._connection.ioloop.stop()
 
         if not self._closing:
-
             # Create a new connection
             self._connection = self.connect()
 
             # There is now a new connection, needs a new ioloop to run
             self._connection.ioloop.start()
-    
+
     def open_channel(self):
         """This method will open a new channel with RabbitMQ by issuing the
         Channel.Open RPC command. When RabbitMQ confirms the channel is open
@@ -270,9 +271,9 @@ class ExamplePublisher(object):
             self._nacked += 1
         self._deliveries.remove(method_frame.method.delivery_tag)
         LOGGER.warning('Published %i messages, %i have yet to be confirmed, '
-                    '%i were acked and %i were nacked',
-                    self._message_number, len(self._deliveries),
-                    self._acked, self._nacked)
+                       '%i were acked and %i were nacked',
+                       self._message_number, len(self._deliveries),
+                       self._acked, self._nacked)
 
     def schedule_next_message(self):
         """If we are not closing our connection to RabbitMQ, schedule another

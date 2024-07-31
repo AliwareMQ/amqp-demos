@@ -20,7 +20,7 @@ export function getUserName(accessKeyId: string, instanceId: string, securityTok
  * 获取密码
  * @param accessKeySecret 
  */
-export function getPassord(accessKeySecret: string): string {
+export function getPassword(accessKeySecret: string): string {
   const timestamp: string = Date.now().toString();
   const signature: string = cryptoJS.HmacSHA1(accessKeySecret, timestamp).toString().toUpperCase();
   

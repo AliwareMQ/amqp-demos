@@ -11,7 +11,7 @@ while(True):
     try:
         print("Connecting...")
 
-        connection = pika.BlockingConnection(connection.getConnectionParam())
+        connection = pika.BlockingConnection(connection.get_connection_param())
         channel = connection.channel()
         channel.basic_qos(prefetch_count=1)
 

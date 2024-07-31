@@ -20,10 +20,10 @@ class ExampleConsumer(object):
     commands that were issued and that should surface in the output as well.
 
     """
-    EXCHANGE = 'exchange.test'
+    EXCHANGE = 'xx-exchange'
     EXCHANGE_TYPE = 'direct'
-    QUEUE = 'queue.test'
-    ROUTING_KEY = 'key'
+    QUEUE = 'xx-queue'
+    ROUTING_KEY = 'xx-key'
 
     def __init__(self):
         """Create a new instance of the consumer class, passing in the AMQP
@@ -47,7 +47,7 @@ class ExampleConsumer(object):
 
         """
         LOGGER.info('Connecting .....')
-        return pika.SelectConnection(connection.getConnectionParam(),
+        return pika.SelectConnection(connection.get_connection_param(),
                                      on_open_callback=self.on_connection_open,
                                      on_open_error_callback=self.on_connection_open_error,
                                      on_close_callback=self.on_connection_closed)

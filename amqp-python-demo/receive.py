@@ -24,7 +24,7 @@ class ExampleConsumer(object):
     EXCHANGE_TYPE = 'direct'
     QUEUE = 'xx-queue'
     ROUTING_KEY = 'xx-key'
-
+    DURABLE = True
     def __init__(self):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -163,6 +163,7 @@ class ExampleConsumer(object):
         #                                exchange_name,
         #                                self.EXCHANGE_TYPE)
         self._channel.exchange_declare(exchange_name,
+                                       durable=self.DURABLE,
                                        exchange_type=self.EXCHANGE_TYPE,
                                        callback=self.on_exchange_declareok)
 

@@ -33,6 +33,7 @@ class ExamplePublisher(object):
     EXCHANGE_TYPE = 'direct'
     QUEUE = 'xx-queue'
     ROUTING_KEY = 'xx-key'
+    DURABLE = True
 
     def __init__(self):
         """Setup the example publisher object, passing in the URL we will use
@@ -170,7 +171,8 @@ class ExamplePublisher(object):
             self._connection.close()
 
     def setup_exchange(self, exchange_name):
-        """Setup the exchange on RabbitMQ by invoking the Exchange.Declare RPC
+        """
+        Set up the exchange on RabbitMQ by invoking the Exchange.Declare RPC
         command. When it is complete, the on_exchange_declareok method will
         be invoked by pika.
 
@@ -179,6 +181,7 @@ class ExamplePublisher(object):
         """
         LOGGER.info('Declaring exchange %s', exchange_name)
         self._channel.exchange_declare(exchange_name,
+                                       durable=self.DURABLE,
                                        exchange_type=self.EXCHANGE_TYPE,
                                        callback=self.on_exchange_declareok)
 
@@ -193,7 +196,8 @@ class ExamplePublisher(object):
         self.setup_queue(self.QUEUE)
 
     def setup_queue(self, queue_name):
-        """Setup the queue on RabbitMQ by invoking the Queue.Declare RPC
+        """
+        Set up the queue on RabbitMQ by invoking the Queue.Declare RPC
         command. When it is complete, the on_queue_declareok method will
         be invoked by pika.
 

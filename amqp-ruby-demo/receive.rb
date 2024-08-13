@@ -1,6 +1,5 @@
 #require "rubygems"
 require "amqp"
-load "AliyunCredentialsProvider.rb"
 
 
 #consumer
@@ -32,15 +31,11 @@ end
 
 
 #从控制台获取以下信息
-accessKey  = "{accessKey}"
-secretKey  = "{secretKey}"
-instanceId = "{instanceId}"
-acp        = AliyunCredentialsProvider.new(accessKey, secretKey, instanceId)
-userName   = acp.get_user.chomp
-passWord   = acp.get_password.chomp
+userName   = ""
+passWord   = ""
 
-host        = "{hostIP}"  
-port        = {port}
+host        = "{endpoint}"
+port        = 5672
 vhost       = "{vhostName}"
 queueName   = "{queueName}"
 exchangeName = "{exchangeName}"

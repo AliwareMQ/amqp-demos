@@ -1,7 +1,6 @@
 
 require "amqp"
-load "AliyunCredentialsProvider.rb"
-
+load "config.rb"
 
 #producer
 class Producer
@@ -22,19 +21,16 @@ end
 
 
 #从控制台获取以下信息
-accessKey  = "{accessKey}"
-secretKey  = "{secretKey}"
-instanceId = "{instanceId}"
-acp        = AliyunCredentialsProvider.new(accessKey, secretKey, instanceId)
-userName   = acp.get_user.chomp
-passWord   = acp.get_password.chomp
+userName   = ""
+passWord   = ""
 
-host        = "{hostIP}"  
-port        = {port}
+host        = "{endpoint}"
+port        = 5672
 vhost       = "{vhostName}"
 queueName   = "{queueName}"
 exchangeName = "{exchangeName}"
-routingkey  = "{routingKey}"
+routingKey  = "{routingKey}"
+
 #连接服务器的URI
 connectStr  = "amqp://" + userName + ":" + passWord + "@" + host + ":" + port.to_s + "/" + vhost
 
@@ -50,7 +46,7 @@ AMQP.start(connectStr) do |connection, open_ok|
   #    Rabbitmq client 向Server发起connection,新建channel大约需要进行15+个TCP报文的传输，会消耗大量网络资源和Server端的资源，甚至引起Server端SYN flooding 攻击保护。因此我们建议消息的发送和消费尽量采用长链接的模式。
   producer = Producer.new(channel, exchange)
   puts "publish..."
-  producer.publish("hello, world", :routing_key => routingkey)
+  producer.publish("hello, world", :routing_key => routingKey)
 
   
   EventMachine.add_timer(5.0) { connection.close{ EventMachine.stop } }

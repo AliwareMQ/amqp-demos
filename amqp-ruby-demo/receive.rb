@@ -20,26 +20,25 @@ class Worker
   end
 
   def start
-    @queue  = @channel.queue(@queue_name)
+    @queue  = @channel.queue(@queue_name, :durable => true )
     @queue.subscribe(&@consumer.method(:handle_message))
   end
 
   def handle_channel_exception(channel, channel_close)
-    puts "Oop... a channel-level exception: code = #{channel_close.reply_code}, message = #{channel_close.reply_text}"
+    puts "Oop... a channel-level[#{channel}] exception: code = #{channel_close.reply_code}, message = #{channel_close.reply_text}"
   end
 end
 
 
 #从控制台获取以下信息
-userName   = ""
-passWord   = ""
+userName = "userName"
+passWord = "password"
 
-host        = "{endpoint}"
-port        = 5672
-vhost       = "{vhostName}"
-queueName   = "{queueName}"
-exchangeName = "{exchangeName}"
-routingkey  = "{routingKey}"
+host = "rabbitmq-xxxxx.mq.amqp.aliyuncs.com"
+port = 5672
+vhost = "your-vhost"
+queueName = "your-queue"
+
 #连接服务器的URI
 connectStr  = "amqp://" + userName + ":" + passWord + "@" + host + ":" + port.to_s + "/" + vhost
 
@@ -48,11 +47,10 @@ connectStr  = "amqp://" + userName + ":" + passWord + "@" + host + ":" + port.to
 #main
 AMQP.start(connectStr) do |connection, open_ok|
   channel = AMQP::Channel.new(connection)
-  exchange = channel.direct(exchangeName)
   worker = Worker.new(channel, queueName)
   worker.start
 
-  EventMachine.add_timer(120.0) { connection.close{ EventMachine.stop } }
+  EM.add_timer(20.0) { connection.close{ EM.stop } }
 
 end
 

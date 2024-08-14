@@ -24,7 +24,7 @@ class ExampleConsumer(object):
     EXCHANGE_TYPE = 'direct'
     QUEUE = 'xx-queue'
     ROUTING_KEY = 'xx-key'
-
+    DURABLE = True
     def __init__(self):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -163,6 +163,7 @@ class ExampleConsumer(object):
         #                                exchange_name,
         #                                self.EXCHANGE_TYPE)
         self._channel.exchange_declare(exchange_name,
+                                       durable=self.DURABLE,
                                        exchange_type=self.EXCHANGE_TYPE,
                                        callback=self.on_exchange_declareok)
 
@@ -187,7 +188,9 @@ class ExampleConsumer(object):
         LOGGER.info('Declaring queue %s', queue_name)
         # self._channel.queue_declare(self.on_queue_declareok, queue_name)
 
-        self._channel.queue_declare(queue_name, callback=self.on_queue_declareok)
+        # self._channel.queue_declare(queue_name, callback=self.on_queue_declareok)
+
+        self._channel.queue_declare(queue_name, durable=self.DURABLE, callback=self.on_queue_declareok)
 
     def on_queue_declareok(self, method_frame):
         """Method invoked by pika when the Queue.Declare RPC call made in

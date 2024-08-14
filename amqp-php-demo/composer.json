@@ -1,9 +1,9 @@
 {
-      "require": {
-        "php-amqplib/php-amqplib": ">=2.8.1",
-            "ext-json": "*"
-      },
-      "require-dev": {
-            "phpunit/phpunit": "^5"
-      }
+  "require": {
+    "php-amqplib/php-amqplib": ">=2.8.1",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5"
+  }
 }

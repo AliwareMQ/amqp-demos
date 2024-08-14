@@ -9,32 +9,30 @@
     <!--组件扫描，需要添加pom依赖 spring-context -->
     <context:component-scan  base-package="com.alibaba.rabbit.spring" />
 
-    <bean id="userUtils" class="com.alibaba.mq.amqp.utils.UserUtils"/>
-
     <!--配置连接-->
-    <rabbit:connection-factory id="connectionFactory" host="endpoint" port="5672"
-                               username="#{userUtils.getUserName('ak',instanceId)}" password="#{userUtils.getPassord('sk')}"  virtual-host="test" requested-heartbeat="60" />
+    <rabbit:connection-factory id="connectionFactory" host="rabbitmq-xxxxx.mq.amqp.aliyuncs.com" port="5672"
+                               username="YOUR-USER-NAME" password="YOUR-PASSWORD"  virtual-host="your-vhost" requested-heartbeat="60" />
 
     <!--配置RabbitTemplate-->
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"
-                     exchange="siyong-test-exchange1" routing-key="foo.bar"/>
+                     exchange="your-exchange" routing-key="your-routing-key"/>
 
     <!--配置RabbitAdmin-->
     <rabbit:admin connection-factory="connectionFactory" />
 
     <!--配置队列名-->
-    <rabbit:queue name="siyong-test-queue" />
+    <rabbit:queue name="your-queue" />
 
-    <!--配置topic类型exchange-->
-    <rabbit:topic-exchange name="siyong-test-exchange1">
+    <!--配置direct类型exchange-->
+    <rabbit:direct-exchange name="your-exchange">
         <rabbit:bindings>
-            <rabbit:binding queue="siyong-test-queue" pattern="foo.*" />
+            <rabbit:binding queue="your-queue" key="your-routing-key" />
         </rabbit:bindings>
-    </rabbit:topic-exchange>
+    </rabbit:direct-exchange>
 
     <!--配置监听-->
     <rabbit:listener-container connection-factory="connectionFactory">
-        <rabbit:listener ref="foo" method="listen" queue-names="siyong-test-queue" />
+        <rabbit:listener ref="messageReceiver" method="listen" queue-names="your-queue" />
     </rabbit:listener-container>
 
 </beans>

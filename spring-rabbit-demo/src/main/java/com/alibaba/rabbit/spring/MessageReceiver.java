@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class Foo {
+public class MessageReceiver {
     public void listen(String message) {
         System.out.println(" [x] Received '" + message + "'");
     }

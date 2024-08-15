@@ -12,3 +12,8 @@ devenv
 !NOTICE-BIN
 !LICENSE-BIN
 .DS_Store
+*.dll
+/bin
+*.pdb
+amqp-dotnet-demo/bin/Debug/
+amqp-dotnet-demo/obj/

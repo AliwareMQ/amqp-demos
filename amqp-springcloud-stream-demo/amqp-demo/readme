@@ -1,0 +1,13 @@
+不看必挂
+1.修改application.properties
+ #接入点根据AMQP控制台获取接入点
+ spring.rabbitmq.host=${endpoint}
+ #端口 默认5672
+ spring.rabbitmq.port=${port}
+ #userName  AMQP控制台获取
+ spring.rabbitmq.username=${userName}
+ #password AMQP控制台获取用
+ spring.rabbitmq.password=${password}
+ #virtual-host 你要使用的virtaulhost,AMQP控制台获取用
+ spring.rabbitmq.virtual-host=${vhost}
+

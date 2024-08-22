@@ -1,37 +1,12 @@
 {
-  "name": "aliyun-amqp-node-cli",
+  "name": "amqp-node-demo",
   "version": "1.0.0",
-  "description": "aliyun amqp node cli",
-  "main": "build/index.js",
+  "description": "amqp-node-demo",
+  "main": "consume.js",
   "scripts": {
-    "dev": "tsc -w",
-    "test": "node test/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "amqp",
-    "RabbitMQ",
-    "node",
-    "cli",
-    "plugin",
-    "aliyun",
-    "aliware",
-    "mq"
-  ],
-  "author": "zhichen <zhichen.lc@alibaba-inc.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jameslcj/aliyun-amqp-node-cli.git"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "crypto-js": "^3.1.9-1",
-    "js-base64": "^2.5.1"
-  },
-  "devDependencies": {
-    "@types/node": "^11.9.4",
-    "amqplib": "^0.5.3",
-    "tslib": "^1.9.3",
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.3"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

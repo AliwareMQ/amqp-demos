@@ -18,8 +18,10 @@ echo " [*] Waiting for messages. To exit press CTRL+C\n";
 
 $callback = function ($msg) {
     echo ' [x] Received ', $msg->body, "\n";
-    $headers = $msg->get('application_headers');
-    echo ' [x] Received ', $headers->getNativeData()['delay'], "\n";
+    if ($msg->has('application_headers')) {
+        $headers = $msg->get('application_headers');
+        echo ' [x] Received Headers [delay=>', $headers->getNativeData()['delay'], "]\n";
+    }
     $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
 };
 

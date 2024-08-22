@@ -4,18 +4,13 @@
 2.配置config-server配置中心服务端，修改该模块的配置文件application.properties
   配置相关的配置参数库信息，并启动
 3.修改config-client配置客户端的配置文件application.properties
- #接入点根据控制台获取接入点
+ #接入点根据AMQP控制台获取接入点
  spring.rabbitmq.host=${endpoint}
  #端口 默认5672
  spring.rabbitmq.port=${port}
- #accessKey  ram控制台获取用户子账户ak
- spring.rabbitmq.username=${ak}
- #secretKey ram控制台获取用户子账户ak
- spring.rabbitmq.password=${sk}
- #virtual-host 你要使用的virtaulhost
+ #UserName AMQP控制台获取
+ spring.rabbitmq.username=${username}
+ #Password AMQP控制台获取
+ spring.rabbitmq.password=${password}
+ #virtual-host 你要使用的virtaulhost,AMQP控制台获取
  spring.rabbitmq.virtual-host=${vhost}
-
-2.修改 RabbitConfig 类的属性INSTANCE_ID
-
- #实例id，从阿里云AMQP控制台获取
- private static final String INSTANCE_ID ="XXX";

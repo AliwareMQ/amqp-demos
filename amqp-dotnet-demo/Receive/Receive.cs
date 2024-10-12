@@ -27,13 +27,14 @@ class Receive
             channel.QueueDeclare(queue: yourQueue, durable: true, exclusive: false, autoDelete: false, arguments: null);
 
             var consumer = new EventingBasicConsumer(channel);
+            String consumerTag = "myConsumerTag";
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
                 Console.WriteLine(" [x] Received {0}", message);
             };
-            channel.BasicConsume(queue: yourQueue, autoAck: true, consumer: consumer);
+            channel.BasicConsume(queue: yourQueue, autoAck: true, consumerTag: consumerTag, consumer: consumer);
 
             Console.WriteLine(" Press [enter] to exit.");
             Console.ReadLine();

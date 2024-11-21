@@ -11,7 +11,7 @@
     <dependency>
         <groupId>com.rabbitmq</groupId>
         <artifactId>amqp-client</artifactId>
-        <version>5.13.0</version> <!-- 使用最新的稳定版本 -->
+        <version>5.18.0</version> <!-- 使用最新的稳定版本 -->
     </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>

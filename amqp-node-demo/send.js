@@ -7,6 +7,9 @@ const password = 'password';
 const vhost = 'vhost';
 const queue = 'queue';
 
+// disabling TLS validation
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
 const amqpUrl = `amqp://${username}:${password}@${endpoint}/${vhost}`;
 
 async function connectToAmqpAndSendMsg(amqpUrl, queue, msg) {

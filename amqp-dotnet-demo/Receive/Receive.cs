@@ -1,6 +1,7 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
+using System.Security.Authentication;
 using System.Text;
 
 class Receive
@@ -21,6 +22,19 @@ class Receive
 
         String yourQueue = "your-queue";
 
+        if (factory.Port == 5671)
+        {
+            var Ssl = new SslOption
+            {
+                Enabled = true,
+                AcceptablePolicyErrors = System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors
+                                         | System.Net.Security.SslPolicyErrors.RemoteCertificateNameMismatch
+                                         | System.Net.Security.SslPolicyErrors.RemoteCertificateNotAvailable,
+                Version = SslProtocols.Tls12
+            };
+            factory.Ssl = Ssl;
+        }
+        
         using (var connection = factory.CreateConnection())
         using (var channel = connection.CreateModel())
         {

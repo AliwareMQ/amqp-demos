@@ -1,6 +1,7 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 using System;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading;
 
@@ -23,6 +24,21 @@ class Send
         String yourQueue = "your-queue";
         String yourExchange = "your-exchange";
         String yourRouterKey = "your-routing-key";
+
+
+        if (factory.Port == 5671)
+        {
+            var Ssl = new SslOption
+            {
+                Enabled = true,
+                AcceptablePolicyErrors = System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors
+                                         | System.Net.Security.SslPolicyErrors.RemoteCertificateNameMismatch
+                                         | System.Net.Security.SslPolicyErrors.RemoteCertificateNotAvailable,
+                Version = SslProtocols.Tls12
+            };
+            factory.Ssl = Ssl;
+        }
+
 
         var connection = factory.CreateConnection();
         var channel = connection.CreateModel();

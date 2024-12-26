@@ -9,6 +9,10 @@ const queue = 'queue';
 
 const amqpUrl = `amqp://${username}:${password}@${endpoint}/${vhost}`;
 
+//#disabling TLS validation
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
+
 async function consume() {
   try {
     // Connect to RabbitMQ Server

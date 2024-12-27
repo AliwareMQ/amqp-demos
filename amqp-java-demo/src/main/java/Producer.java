@@ -20,7 +20,7 @@ public class Producer {
     private static final String HOSTNAME = Config.HOSTNAME;
     private static final String USERNAME = Config.USERNAME;
     private static final String PASSWORD = Config.PASSWORD;
-    //如果使用5671端口，需要enableSSL设置为true。
+    //如果需要使用 TLS 加密，改为 5671 端口，并且enableSSL设置为true。
     public static final int PORT = 5672;
     public static final boolean enableSSL = false;
 
@@ -48,7 +48,7 @@ public class Producer {
 
         producer.initChannel();
 
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 10000000; i++) {
             //发送消息。
             producer.doSend("hello,amqp");
             Thread.sleep(100);

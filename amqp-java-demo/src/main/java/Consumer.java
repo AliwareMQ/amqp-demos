@@ -17,7 +17,7 @@ public class Consumer {
     private static final String USERNAME = Config.USERNAME;
     private static final String PASSWORD = Config.PASSWORD;
 
-    //如果使用5671端口，需要enableSSL设置为true。
+    //如果需要使用 TLS 加密，改为 5671 端口，并且enableSSL设置为true。。
     public static final int PORT = 5672;
     public static final boolean enableSSL = false;
 
